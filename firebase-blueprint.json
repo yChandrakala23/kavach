@@ -1,0 +1,60 @@
+{
+  "entities": {
+    "Patient": {
+      "title": "Patient",
+      "description": "A patient admitted to the hospital",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Full name of the patient" },
+        "age": { "type": "integer", "description": "Age of the patient" },
+        "gender": { "type": "string", "enum": ["Male", "Female", "Other"] },
+        "bedNumber": { "type": "string", "description": "Assigned bed number" },
+        "ward": { "type": "string", "description": "Assigned ward" },
+        "diagnosis": { "type": "string", "description": "Primary diagnosis" },
+        "doctorAssigned": { "type": "string", "description": "Name of the assigned doctor" },
+        "admissionDate": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["Normal", "Warning", "Critical"] },
+        "pdi": { "type": "integer", "description": "Patient Deterioration Index" },
+        "vitals": { "$ref": "Vitals" }
+      },
+      "required": ["name", "bedNumber", "status", "pdi"]
+    },
+    "Vitals": {
+      "title": "Vitals",
+      "description": "Real-time vitals data",
+      "type": "object",
+      "properties": {
+        "heartRate": { "type": "integer" },
+        "spO2": { "type": "integer" },
+        "respiratoryRate": { "type": "integer" },
+        "temperature": { "type": "number" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Alert": {
+      "title": "Alert",
+      "description": "Clinical alert triggered by vitals threshold",
+      "type": "object",
+      "properties": {
+        "patientId": { "type": "string" },
+        "patientName": { "type": "string" },
+        "bedNumber": { "type": "string" },
+        "type": { "type": "string", "enum": ["HR", "SpO2", "RR", "Temp", "PDI"] },
+        "value": { "type": "number" },
+        "severity": { "type": "string", "enum": ["Normal", "Warning", "Critical"] },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "isRead": { "type": "boolean" }
+      }
+    }
+  },
+  "firestore": {
+    "/patients": {
+      "schema": "Patient",
+      "description": "Collection of all patients"
+    },
+    "/alerts": {
+      "schema": "Alert",
+      "description": "Collection of clinical alerts"
+    }
+  }
+}

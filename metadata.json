@@ -1,0 +1,7 @@
+{
+  "name": "Remix: KAVACH",
+  "description": "A futuristic AI-powered hospital patient monitoring system with real-time vitals tracking, AI-driven clinical insights, and automated SMS alerts for critical patient status.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
